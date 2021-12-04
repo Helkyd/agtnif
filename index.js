@@ -64,7 +64,7 @@ async function example(nifverificar)
 	//await await driver.findElement(By.xpath("//*[text()='Resultado da consulta']")).then(found => {
 	await await driver.findElement(By.className('imprimirDli')).then(found => {
 		console.log('Resultado consulta.');
-		//Now scrap the results....
+		//Now scrap the results.....
 		driver.findElement(By.className('collection-item')).then(function(elements){
 			elements.forEach(function(element){
 				element.getText().then(function(text){
