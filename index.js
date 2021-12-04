@@ -1,14 +1,26 @@
+const { Console } = require('console');
+const readline = require('readline');
+
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+
 const {Builder,By,Key,until, WebElement} = require("selenium-webdriver");
 //const { IWebDriver } = require("selenium-webdriver/lib/webdriver");
 //var webdriver = require("selenium-webdriver"), By = webdriver.By, until = webdriver.until;
 
-async function example()
+async function example(nifverificar)
 {
 	let driver = await new Builder().forBrowser("firefox").build();
+	//Clear Cache before
+	driver.manage().deleteAllCookies();
+	
 	//let driver = await new Builder().forBrowser("chrome").build();
 
 	//let driver = await new webdriver.Builder().forBrowser("firefox").build();
-	await driver.get("https://agt.minfin.gov.ao/PortalAGT/#!/servicos/consultar-nif/5417283657");
+	var nif = '9999999999';
+	await driver.get("https://agt.minfin.gov.ao/PortalAGT/#!/servicos/consultar-nif/" + (nifverificar || nif));
 	console.log('Carregou.');
 
 
@@ -111,10 +123,14 @@ async function example()
 		  console.log('Element not found.');
 		}
 	});	
-	
 
-    //new WebDriverWait(driver, 20).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.name("iframe")));
-
-	//await driver.findElement(By.name("q")).sendKeys("Selenium",Key.RETURN);
 }
-example();
+
+//Ask for NIF other will not run
+/*
+rl.question("Digite o NIF a verificar:", function saveInput(nifverificar) {
+	console.log(`NIF a verificar ${nifverificar} `);
+	example(nifverificar);
+});
+*/
+example('5417283657');
