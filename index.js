@@ -59,7 +59,7 @@ async function example(nifverificar)
 		}
 	});	
 
-	//Scrap
+	
 	//let reconsulta = await driver.findElement(By.xpath("//*[text()='Resultado da consulta']"));
 	//await await driver.findElement(By.xpath("//*[text()='Resultado da consulta']")).then(found => {
 	await await driver.findElement(By.className('imprimirDli')).then(found => {
