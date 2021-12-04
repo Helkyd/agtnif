@@ -22,6 +22,9 @@ async function example(nifverificar)
 	await driver.get("https://agt.minfin.gov.ao/PortalAGT/#!/servicos/consultar-nif/" + (nifverificar || nif));
 	console.log('Carregou.');
 
+	//Scrap...
+	//html = await driver.getPageSource();
+	//console.log(html);
 
 	await driver.switchTo().frame(driver.findElement(By.tagName('iframe')).click()).then(found =>{
 		console.log('Fez Clique.');
@@ -48,6 +51,28 @@ async function example(nifverificar)
 	await driver.wait(until.elementIsEnabled(tt)).then(found => {
 		console.log('Botao activo.');
 		tt.click();
+
+		//Now scrap the results....
+	}, error => {
+		if (error instanceof webdriver.error.NoSuchElementError) {
+		  console.log('Element not found.');
+		}
+	});	
+
+	//Scrap
+	//let reconsulta = await driver.findElement(By.xpath("//*[text()='Resultado da consulta']"));
+	//await await driver.findElement(By.xpath("//*[text()='Resultado da consulta']")).then(found => {
+	await await driver.findElement(By.className('imprimirDli')).then(found => {
+		console.log('Resultado consulta.');
+		//Now scrap the results....
+		driver.findElement(By.className('collection-item')).then(function(elements){
+			elements.forEach(function(element){
+				element.getText().then(function(text){
+					console.log(text);
+				});
+			});
+		});
+	
 
 	}, error => {
 		if (error instanceof webdriver.error.NoSuchElementError) {
